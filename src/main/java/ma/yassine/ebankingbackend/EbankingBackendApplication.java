@@ -1,14 +1,13 @@
 package ma.yassine.ebankingbackend;
 
-import ma.yassine.ebankingbackend.entities.AccountOperation;
-import ma.yassine.ebankingbackend.entities.CurrentAccount;
-import ma.yassine.ebankingbackend.entities.Customer;
-import ma.yassine.ebankingbackend.entities.SavingAccount;
+import jakarta.transaction.Transactional;
+import ma.yassine.ebankingbackend.entities.*;
 import ma.yassine.ebankingbackend.enums.AccountStatus;
 import ma.yassine.ebankingbackend.enums.OperationType;
 import ma.yassine.ebankingbackend.repositories.AccountOperationRepository;
 import ma.yassine.ebankingbackend.repositories.BankAccountRepository;
 import ma.yassine.ebankingbackend.repositories.CustomerRepository;
+import ma.yassine.ebankingbackend.services.BankService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -24,8 +23,15 @@ public class EbankingBackendApplication {
     public static void main(String[] args) {
         SpringApplication.run(EbankingBackendApplication.class, args);
     }
-
     @Bean
+    @Transactional
+    CommandLineRunner commandLineRunner(BankService bankService) {
+        return args->{
+            bankService.consulter();
+        };
+    }
+
+//    @Bean
     CommandLineRunner start(CustomerRepository  customerRepository,
                             BankAccountRepository bankAccountRepository,
                             AccountOperationRepository accountOperationRepository) {
@@ -64,8 +70,10 @@ public class EbankingBackendApplication {
                     accountOperation.setBankAccount(acc);
                     accountOperationRepository.save(accountOperation);
                 }
+
             });
         };
+
     }
 
 }
