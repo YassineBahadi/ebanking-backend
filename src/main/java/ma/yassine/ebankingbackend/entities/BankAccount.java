@@ -15,9 +15,9 @@ import java.util.List;
 @Data
 @NoArgsConstructor  @AllArgsConstructor
 @Entity
-@Inheritance(strategy=InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name="TYPE",length = 4,discriminatorType = DiscriminatorType.STRING)
-public class BankAccount {
+@Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
+//@DiscriminatorColumn(name="TYPE",length = 4,discriminatorType = DiscriminatorType.STRING)
+public abstract class BankAccount {
     @Id
     private String id;
     private double balance;
