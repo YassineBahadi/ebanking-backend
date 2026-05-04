@@ -1,12 +1,12 @@
 package ma.yassine.ebankingbackend.services;
 
-import jakarta.transaction.Transactional;
 import ma.yassine.ebankingbackend.entities.BankAccount;
 import ma.yassine.ebankingbackend.entities.CurrentAccount;
 import ma.yassine.ebankingbackend.entities.SavingAccount;
 import ma.yassine.ebankingbackend.repositories.BankAccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @author pc
