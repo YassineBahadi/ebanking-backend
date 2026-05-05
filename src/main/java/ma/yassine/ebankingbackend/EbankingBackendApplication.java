@@ -1,6 +1,7 @@
 package ma.yassine.ebankingbackend;
 
 import jakarta.transaction.Transactional;
+import ma.yassine.ebankingbackend.dtos.CustomerDTO;
 import ma.yassine.ebankingbackend.entities.*;
 import ma.yassine.ebankingbackend.enums.AccountStatus;
 import ma.yassine.ebankingbackend.enums.OperationType;
@@ -32,7 +33,7 @@ public class EbankingBackendApplication {
     CommandLineRunner commandLineRunner(BankAccountService bankAccountService) {
         return args->{
             Stream.of("Hassan","Imane","Mohamed").forEach(name->{
-                Customer customer = new Customer();
+                CustomerDTO customer = new CustomerDTO();
                 customer.setName(name);
                 customer.setEmail(name+"@gmail.com");
                 bankAccountService.saveCustomer(customer);
