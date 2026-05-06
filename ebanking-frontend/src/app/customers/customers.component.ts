@@ -6,29 +6,41 @@ import { catchError, Observable, throwError } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
 import { Customer } from '../models/customer.model';
 import { of } from 'rxjs';
+import { FormBuilder, FormGroup ,ReactiveFormsModule} from '@angular/forms';
 
 @Component({
   selector: 'app-customers',
-  imports: [JsonPipe,AsyncPipe],
+  imports: [JsonPipe,AsyncPipe,ReactiveFormsModule],
   templateUrl: './customers.component.html',
   styleUrl: './customers.component.css'
 })
 export class CustomersComponent implements OnInit {
+
   customers!:Observable<Array<Customer>>;
   errorMessage!:string;
-
   loading=false;
 
-  constructor(private customerService:CustomerService){}
+  searchFormGroup:FormGroup | undefined;
+
+  constructor(private customerService:CustomerService,private fb:FormBuilder){}
 
   ngOnInit(): void {
+    this.searchFormGroup=this.fb.group({
+      keyword:this.fb.control("")
+    })
+
     this.loading=true;
-    this.customers=this.customerService.getCustomers().pipe(
+    this.handleSearchCustomers();
+  }
+
+  handleSearchCustomers() {
+    let kw=this.searchFormGroup?.value.keyword;
+    this.customers=this.customerService.searchCustomers(kw).pipe(
       catchError(err=>{
-          this.errorMessage = err.message;
+        this.errorMessage = err.message;
           return of([]);
       })
-    );
+    )
   }
 
 }

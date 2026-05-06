@@ -21,9 +21,17 @@
       }
 
       @if (customers | async; as listCustomers) {
-
-        {{loading==false}}
-
+        @if(searchFormGroup){
+          <div>
+            <form [formGroup]="searchFormGroup" (ngSubmit)="handleSearchCustomers()">
+              <div class="input-group">
+                <label class="input-group-text">Keyword : </label>
+                <input class="from-control" type="text" formControlName="keyword">
+                <button class="btn btn-info">Search</button>
+              </div>
+            </form>
+          </div>
+        }
         <table class="table">
           <thead>
             <tr>
