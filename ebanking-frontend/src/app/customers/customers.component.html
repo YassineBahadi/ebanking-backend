@@ -8,24 +8,20 @@
 
     <div class="card-body">
 
-      <!-- LOADING -->
       @if (loading && !(customers | async)) {
         <div class="text-primary">
           Loading customers...
         </div>
       }
 
-      <!-- ERROR -->
       @if (errorMessage) {
         <div class="text-danger">
           {{ errorMessage }}
         </div>
       }
 
-      <!-- DATA -->
       @if (customers | async; as listCustomers) {
 
-        <!-- on coupe loading visuellement -->
         {{loading==false}}
 
         <table class="table">
