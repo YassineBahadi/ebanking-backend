@@ -2,7 +2,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { CustomerService } from '../services/customer.service';
 import { JsonPipe } from '@angular/common';
-import { catchError, Observable, throwError } from 'rxjs';
+import { catchError, Observable, throwError ,map} from 'rxjs';
 import { AsyncPipe } from '@angular/common';
 import { Customer } from '../models/customer.model';
 import { of } from 'rxjs';
@@ -15,6 +15,7 @@ import { FormBuilder, FormGroup ,ReactiveFormsModule} from '@angular/forms';
   styleUrl: './customers.component.css'
 })
 export class CustomersComponent implements OnInit {
+
 
   customers!:Observable<Array<Customer>>;
   errorMessage!:string;
@@ -41,6 +42,25 @@ export class CustomersComponent implements OnInit {
           return of([]);
       })
     )
+  }
+
+  handleDeleteCustomer(customer: Customer) {
+    let conf=confirm("Are you Sure?");
+    if(!conf) return;
+    this.customerService.deleteCustomer(customer.id).subscribe({
+      next:(resp)=>{
+          this.customers=this.customers.pipe(
+            map(data=>{
+              let index=data.indexOf(customer);
+              data.slice(index,1);
+              return data;
+            })
+          )
+      },
+      error:(err)=>{
+          console.log(err);
+      }
+    })
   }
 
 }

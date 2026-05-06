@@ -8,12 +8,18 @@
                 <div class="mb-3">
                     <label  class="form-label">Name :</label>
                     <input type="text" class="form-control" formControlName="name">
+                    @if(newCustomerFormGroup.get('name')?.touched && newCustomerFormGroup.get('name')?.invalid){
+                        <span class="text-danger">Name is required</span>
+                    }
                 </div>
                 <div class="mb-3">
                     <label  class="form-label">Email :</label>
                     <input type="email" class="form-control" formControlName="email">
+                      @if(newCustomerFormGroup.get('email')?.touched && newCustomerFormGroup.get('email')?.invalid){
+                        <span class="text-danger">Email is not valid</span>
+                    }
                 </div>
-                <button class="btn btn-success">Save</button>
+                <button [disabled]="!newCustomerFormGroup.valid"  class="btn btn-success">Save</button>
             </form>
         </div>
     </div>
