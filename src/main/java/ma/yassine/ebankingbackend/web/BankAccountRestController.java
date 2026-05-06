@@ -6,16 +6,14 @@ import ma.yassine.ebankingbackend.dtos.AccountOperationDTO;
 import ma.yassine.ebankingbackend.dtos.BankAccountDTO;
 import ma.yassine.ebankingbackend.exceptions.BankAccountNotFoundException;
 import ma.yassine.ebankingbackend.services.BankAccountService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 /**
  * @author pc
  **/
+@CrossOrigin("http://localhost:4200")
 @RestController
 @AllArgsConstructor
 public class BankAccountRestController {

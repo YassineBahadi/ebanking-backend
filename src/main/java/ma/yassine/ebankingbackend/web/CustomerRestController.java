@@ -13,6 +13,7 @@ import java.util.List;
 /**
  * @author pc
  **/
+@CrossOrigin("http://localhost:4200")
 @RestController
 @AllArgsConstructor
 @Slf4j

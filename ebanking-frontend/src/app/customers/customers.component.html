@@ -1,1 +1,28 @@
-<p>customers works!</p>
+<div class="container mt-2">
+    @if(customers){
+        <div class="card">
+        <div class="card-header">Customers List</div>
+        <div class="card-body">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                    </tr>
+                </thead>
+                <tbody>
+                @for (customer of customers; track $index) {
+                    <tr>
+                        <td> {{customer.id}} </td>
+                        <td> {{customer.name}} </td>
+                        <td> {{customer.email}} </td>
+                    </tr>    
+                }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    }
+</div>
