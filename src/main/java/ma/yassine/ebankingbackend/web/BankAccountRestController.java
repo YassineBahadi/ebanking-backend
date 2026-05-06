@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * @author pc
  **/
-@CrossOrigin("http://localhost:4200")
+@CrossOrigin("*")
 @RestController
 @AllArgsConstructor
 public class BankAccountRestController {

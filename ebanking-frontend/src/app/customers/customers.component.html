@@ -1,34 +1,57 @@
 <div class="container mt-2">
-    <!-- @if(errorMessage){
-            <div class="text-danger">
-                {{errorMessage.message}}
-            </div>
-        } -->
-    @if(customers){
-        <div class="card">
-        <div class="card-header">Customers List</div>
-        <div class="card-body">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>Id</th>
-                        <th>Name</th>
-                        <th>Email</th>
 
-                    </tr>
-                </thead>
-                <tbody>
-                @for (customer of customers | async; track $index) {
-                    <tr>
-                        <td> {{customer.id}} </td>
-                        <td> {{customer.name}} </td>
-                        <td> {{customer.email}} </td>
-                    </tr>    
-                }
-                </tbody>
-            </table>
-        </div>
+  <div class="card">
+
+    <div class="card-header">
+      Customers
     </div>
 
-    }
+    <div class="card-body">
+
+      <!-- LOADING -->
+      @if (loading && !(customers | async)) {
+        <div class="text-primary">
+          Loading customers...
+        </div>
+      }
+
+      <!-- ERROR -->
+      @if (errorMessage) {
+        <div class="text-danger">
+          {{ errorMessage }}
+        </div>
+      }
+
+      <!-- DATA -->
+      @if (customers | async; as listCustomers) {
+
+        <!-- on coupe loading visuellement -->
+        {{loading==false}}
+
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Id</th>
+              <th>Name</th>
+              <th>Email</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            @for (customer of listCustomers; track customer.id) {
+              <tr>
+                <td>{{ customer.id }}</td>
+                <td>{{ customer.name }}</td>
+                <td>{{ customer.email }}</td>
+              </tr>
+            }
+          </tbody>
+        </table>
+
+      }
+
+    </div>
+
+  </div>
+
 </div>
