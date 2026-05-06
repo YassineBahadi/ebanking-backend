@@ -31,3 +31,8 @@ build/
 
 ### VS Code ###
 .vscode/
+
+
+# Angular
+ebanking-frontend/node_modules
+ebanking-frontend/dist

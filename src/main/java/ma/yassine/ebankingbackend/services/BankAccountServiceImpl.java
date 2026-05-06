@@ -214,5 +214,4 @@ public class BankAccountServiceImpl implements BankAccountService{
         accountHistoryDTO.setTotalPages(accountOperations.getTotalPages());
         return accountHistoryDTO;
     }
-
 }
