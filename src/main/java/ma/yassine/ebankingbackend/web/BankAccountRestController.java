@@ -1,9 +1,8 @@
 package ma.yassine.ebankingbackend.web;
 
 import lombok.AllArgsConstructor;
-import ma.yassine.ebankingbackend.dtos.AccountHistoryDTO;
-import ma.yassine.ebankingbackend.dtos.AccountOperationDTO;
-import ma.yassine.ebankingbackend.dtos.BankAccountDTO;
+import ma.yassine.ebankingbackend.dtos.*;
+import ma.yassine.ebankingbackend.exceptions.BalanceNotSufficientException;
 import ma.yassine.ebankingbackend.exceptions.BankAccountNotFoundException;
 import ma.yassine.ebankingbackend.services.BankAccountService;
 import org.springframework.web.bind.annotation.*;
@@ -42,5 +41,23 @@ public class BankAccountRestController {
             ) throws BankAccountNotFoundException {
         return bankAccountService.getAccountHistory(accountId,page,size);
     }
+
+    @PostMapping("/accounts/debit")
+    public DebitDTO debit(@RequestBody  DebitDTO debitDTO) throws BankAccountNotFoundException, BalanceNotSufficientException {
+        this.bankAccountService.debit(debitDTO.getAccountId(),debitDTO.getAmount(),debitDTO.getDescription());
+        return debitDTO;
+    }
+
+    @PostMapping("/accounts/credit")
+    public CreditDTO credit(@RequestBody  CreditDTO creditDTO) throws BankAccountNotFoundException {
+        this.bankAccountService.credit(creditDTO.getAccountId(),creditDTO.getAmount(),creditDTO.getDescription());
+        return creditDTO;
+    }
+    @PostMapping("/accounts/transfer")
+    public void transfer(@RequestBody  TransferRequestDTO transferRequestDTO) throws BankAccountNotFoundException, BalanceNotSufficientException {
+        this.bankAccountService.transfer(transferRequestDTO.getAccountSource(),transferRequestDTO.getAccountDestination(),transferRequestDTO.getAmount());
+    }
+
+
 
 }
