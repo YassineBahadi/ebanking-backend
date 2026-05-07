@@ -5,6 +5,7 @@ import { AccountService } from '../services/account.service';
 import { catchError, Observable, throwError } from 'rxjs';
 import { AccountDetails } from '../models/account.model';
 import { AsyncPipe, DecimalPipe, NgClass , DatePipe } from '@angular/common';
+import { AuthService } from '../services/auth.service';
 @Component({
   selector: 'app-accounts',
   imports: [ReactiveFormsModule, AsyncPipe, DecimalPipe, DatePipe, NgClass],
@@ -23,7 +24,7 @@ export class AccountsComponent implements OnInit {
 
 
 
-    constructor(private fb:FormBuilder,private accountService:AccountService){}
+    constructor(private fb:FormBuilder,private accountService:AccountService,public authService:AuthService){}
 
   ngOnInit(): void {
     this.accountFormGroup=this.fb.group({
