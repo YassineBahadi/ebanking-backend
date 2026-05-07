@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-customers',
-  imports: [JsonPipe,AsyncPipe,ReactiveFormsModule],
+  imports: [AsyncPipe,ReactiveFormsModule],
   templateUrl: './customers.component.html',
   styleUrl: './customers.component.css'
 })
