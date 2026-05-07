@@ -13,11 +13,13 @@ import { AsyncPipe, DecimalPipe, NgClass , DatePipe } from '@angular/common';
 })
 export class AccountsComponent implements OnInit {
 
+
     accountFormGroup!:FormGroup;
     currentPage:number=0;
     pageSize:number=5;
-
     accountObservable!:Observable<AccountDetails>;
+
+    operationFormGroup!:FormGroup;
 
 
     constructor(private fb:FormBuilder,private accountService:AccountService){}
@@ -25,6 +27,12 @@ export class AccountsComponent implements OnInit {
   ngOnInit(): void {
     this.accountFormGroup=this.fb.group({
       accountId:this.fb.control('')
+    })
+    this.operationFormGroup=this.fb.group({
+      operationType:this.fb.control(null),
+      amount:this.fb.control(0),
+      description:this.fb.control(null),
+      accountDestination:this.fb.control(null)
     })
   }
 
@@ -36,6 +44,53 @@ export class AccountsComponent implements OnInit {
   gotoPage(page: number) {
       this.currentPage=page;
       this.handleSearchAccount();
+  }
+
+  handleAccountOperation() {
+      let accountId:string=this.accountFormGroup.value.accountId;
+      let operationType=this.operationFormGroup.value.operationType;
+      let amount:number=this.operationFormGroup.value.amount;
+      let description:string=this.operationFormGroup.value.description;
+      let accountDestination:string=this.operationFormGroup.value.accountDestination;
+
+      if(operationType=='DEBIT'){
+        this.accountService.debit(accountId,amount,description).subscribe({
+          next:(data)=>{
+            alert("success debit");
+            this.operationFormGroup.reset();
+            this.handleSearchAccount();
+          },
+          error:(err)=>{
+            console.log(err);
+          }
+        });
+      }
+
+      else if(operationType=='CREDIT'){
+        this.accountService.credit(accountId,amount,description).subscribe({
+          next:(data)=>{
+            alert("success credit");
+            this.operationFormGroup.reset();
+            this.handleSearchAccount();
+          },
+          error:(err)=>{
+            console.log(err);
+          }
+        });
+      }
+
+      else if(operationType=='TRANSFER'){
+        this.accountService.transfer(accountId,accountDestination,amount,description).subscribe({
+          next:(data)=>{
+            alert("success transfer");
+            this.operationFormGroup.reset();
+            this.handleSearchAccount();
+          },
+          error:(err)=>{
+            console.log(err);
+          }
+        });
+      }
   }
 
 }
