@@ -55,6 +55,11 @@
                 </ul>
             </ng-container>
           }
+          @else {
+            <div class="text-danger">
+                {{errorMessage}}
+            </div>
+          }
         </div>
       </div>
     </div>

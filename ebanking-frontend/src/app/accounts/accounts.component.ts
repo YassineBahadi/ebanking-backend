@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AccountService } from '../services/account.service';
-import { Observable } from 'rxjs';
+import { catchError, Observable, throwError } from 'rxjs';
 import { AccountDetails } from '../models/account.model';
 import { AsyncPipe, DecimalPipe, NgClass , DatePipe } from '@angular/common';
 @Component({
@@ -18,8 +18,9 @@ export class AccountsComponent implements OnInit {
     currentPage:number=0;
     pageSize:number=5;
     accountObservable!:Observable<AccountDetails>;
-
     operationFormGroup!:FormGroup;
+    errorMessage!:string;
+
 
 
     constructor(private fb:FormBuilder,private accountService:AccountService){}
@@ -38,7 +39,12 @@ export class AccountsComponent implements OnInit {
 
   handleSearchAccount() {
     let accountId:string=this.accountFormGroup.value.accountId;
-      this.accountObservable=this.accountService.getAccount(accountId,this.currentPage,this.pageSize);
+      this.accountObservable=this.accountService.getAccount(accountId,this.currentPage,this.pageSize).pipe(
+        catchError(err=>{
+          this.errorMessage=err.message;
+          return throwError(err);
+        })
+      );
   }
 
   gotoPage(page: number) {
